@@ -68,11 +68,13 @@ namespace LibraryConsoleApp.Models
             }
         }
 
-        public static void RemoveBook(Book book)
+        public static void RemoveBook(Book book, int id)
         {
             if (_books.Contains(book))
             {
-                book = _books[^1];
+                Book bookForRemove = Array.Find(_books, n => n.BookId == id);
+                int indexOfBookForRemove = Array.IndexOf(_books, bookForRemove);
+                _books[indexOfBookForRemove] = _books[^1];
                 Array.Resize(ref _books, _books.Length - 1);
                 Console.Clear();
                 Console.WriteLine("-------------------------------------------\n" +
@@ -251,7 +253,7 @@ namespace LibraryConsoleApp.Models
                 goto TryAgain;
             }
 
-            RemoveBook(Book.GetBook(id));
+            RemoveBook(Book.GetBook(id), id);
             
         }
     }
